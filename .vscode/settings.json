@@ -1,0 +1,5 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "astro.updateImportsOnFileMove.enabled": false,
+  "typescript.preferences.importModuleSpecifier": "non-relative"
+}
