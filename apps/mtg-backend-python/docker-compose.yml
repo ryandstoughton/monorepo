@@ -1,0 +1,16 @@
+services:
+  db:
+    container_name: mtg-db
+    image: postgres:16
+    environment:
+      POSTGRES_USER: mtg 
+      POSTGRES_PASSWORD: mtg 
+      POSTGRES_DB: mtg 
+    ports:
+      - 5433:5432
+    volumes:
+      - mtg-backend-db:/var/lib/postgresql/data
+
+volumes:
+  mtg-backend-db:
+    driver: local

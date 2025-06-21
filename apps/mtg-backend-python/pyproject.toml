@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "mtg-backend"
+version = "0.1.0"
+description = "MTG backend service (FastAPI, PostgreSQL, Alembic migrations)"
+authors = [{ name = "Ryan Stoughton", email = "ryandstoughton@gmail.com" }]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.10"
+
+
+[project.scripts]
+start = "server.main:main"
+
+
+[tool.alembic]
+script_location = "%(here)s/alembic"
+prepend_sys_path = ["."]
+timezone = "UTC"
+sqlalchemy.url = "postgresql://mtg:mtg@localhost:5433/mtg"
+
+[tool.alembic.post_write_hooks]
+hooks = ["ruff"]
+
+[tool.alembic.post_write_hooks.ruff]
+type = "exec"
+executable = "{here}/.venv/bin/ruff"
+options = ["check", "--fix", "REVISION_SCRIPT_FILENAME"]
+
+
+[tool.poetry.dependencies]
+mtg-backend-python = { git = "https://github.com/ryandstoughton/repository.git" }

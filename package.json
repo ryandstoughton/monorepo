@@ -1,11 +1,11 @@
 {
-  "name": "chessbro",
+  "name": "monorepo",
   "author": "Ryan Stoughton",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
-    "node": "22.11",
+    "node": "22",
     "npm": "10"
   },
   "workspaces": [
