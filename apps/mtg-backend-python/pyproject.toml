@@ -16,21 +16,6 @@ requires-python = ">=3.10"
 start = "server.main:main"
 
 
-[tool.alembic]
-script_location = "%(here)s/alembic"
-prepend_sys_path = ["."]
-timezone = "UTC"
-sqlalchemy.url = "postgresql://mtg:mtg@localhost:5433/mtg"
-
-[tool.alembic.post_write_hooks]
-hooks = ["ruff"]
-
-[tool.alembic.post_write_hooks.ruff]
-type = "exec"
-executable = "{here}/.venv/bin/ruff"
-options = ["check", "--fix", "REVISION_SCRIPT_FILENAME"]
-
-
 [tool.poetry]
 name = "mtg-backend-python"
 package-mode = false
@@ -79,3 +64,4 @@ uvicorn = "0.34.3"
 uvloop = "0.21.0"
 watchfiles = "1.1.0"
 websockets = "15.0.1"
+apscheduler = "^3.11.0"
