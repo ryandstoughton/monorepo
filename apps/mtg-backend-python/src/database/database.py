@@ -1,14 +1,17 @@
-# TODO: Figure out how to isolate database connection details to its own file.
+from contextlib import contextmanager
 from sqlalchemy import create_engine
 from sqlmodel import Session
 
 
 engine = create_engine(
     "postgresql://mtg:mtg@localhost:5433/mtg",
-    echo="debug",
 )
 
 
+@contextmanager
 def get_session():
-    with Session(engine) as session:
-        yield session
+    db = Session(engine)
+    try:
+        yield db
+    finally:
+        db.close()

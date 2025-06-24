@@ -20,13 +20,7 @@ class CreateCard(BaseModel):
 @router.post("/", response_model=ScryfallCard)
 async def create_card(create: CreateCard, session: Session = Depends(get_session)):
     try:
-        card = ScryfallCard.model_validate(
-            ScryfallCardCreate(
-                scryfall_id=create.scryfall_id,
-                name=create.name,
-                mana_cost=create.mana_cost,
-            )
-        )
+        card = ScryfallCard.model_validate(ScryfallCardCreate(**create.model_dump()))
         session.add(card)
         session.commit()
         session.refresh(card)
