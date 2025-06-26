@@ -85,7 +85,11 @@ class ScryfallCardBase(SQLModel):
     )
 
 
-class ScryfallCard(ScryfallCardBase, table=True, table_name="scryfall_card"):
+class ScryfallCard(ScryfallCardBase, table=True):
+    """
+    Represents information about a single Magic: The Gathering card as listed in Scryfall.
+    """
+
     __tablename__ = "scryfall_card"  # type: ignore - Known SQLModel issue type checking `__tablename__`
 
     id: Optional[int] = Field(

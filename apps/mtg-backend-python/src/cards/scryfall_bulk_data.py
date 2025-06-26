@@ -21,7 +21,6 @@ scheduler: AsyncIOScheduler = AsyncIOScheduler()
 async def stream_json_objects(url: str):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
-            # TODO: Document the ijson + aiohttp response.content interaction in a notebook.
             async for obj in ijson.items_async(
                 response.content, "item", use_float=True
             ):
