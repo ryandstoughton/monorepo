@@ -7,10 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a monorepo containing multiple applications and services:
 
 ### Apps Structure
-- **portfolio** (current directory) - Astro-based blog/portfolio site
-- **coffee** - Another Astro blog site 
+- **portfolio** - Astro-based blog/portfolio site
 - **mtg-backend** - NestJS backend service with PostgreSQL and MikroORM
-- **mtg-backend-python** - FastAPI backend service with PostgreSQL and Alembic migrations
 
 ### Portfolio App (Astro)
 - **Framework**: Astro v5 with TypeScript
@@ -28,12 +26,6 @@ The repository contains two backend implementations for MTG (Magic: The Gatherin
 - Scheduled tasks for Scryfall data synchronization
 - Module-based architecture (CardsModule)
 - Database migrations via MikroORM
-
-**FastAPI Backend (mtg-backend-python)**:
-- Uses SQLAlchemy with PostgreSQL
-- Alembic for database migrations
-- Background schedulers for Scryfall bulk data processing
-- Router-based architecture (cards, packs)
 
 ## Common Development Commands
 
@@ -62,15 +54,6 @@ npm run migration:up
 npm run migration:down
 ```
 
-### MTG Backend (Python) Commands
-```bash
-# From apps/mtg-backend-python directory
-# Note: This project uses Poetry for dependency management
-poetry run uvicorn server.main:app --reload  # Start development server
-poetry run alembic upgrade head              # Run database migrations
-poetry run alembic revision --autogenerate -m "description"  # Create new migration
-```
-
 ### Root Level Commands
 ```bash
 # From monorepo root
@@ -88,11 +71,10 @@ npm test  # Currently returns error - no tests configured at root level
 ### Working with Backend Services
 - Both backends handle MTG card data from Scryfall API
 - NestJS backend uses decorators and dependency injection
-- FastAPI backend uses async/await patterns with Pydantic models
 - Database schemas managed through respective migration systems
 
 ### Database Configuration
-Both backends expect PostgreSQL connection via environment variables:
+Backends expect PostgreSQL connection via environment variables:
 - `DATABASE_HOST`
 - `DATABASE_NAME` 
 - `DATABASE_USER`
@@ -111,20 +93,12 @@ Both backends expect PostgreSQL connection via environment variables:
 - Global configuration module for environment variables
 - Scheduled tasks using `@nestjs/schedule`
 
-### FastAPI Router Pattern
-- Feature routers (cards, packs) organize endpoints
-- Lifespan management for background tasks
-- Database operations through SQLAlchemy models
-
 ## Testing
 
 ### NestJS Backend
 - Jest for unit testing
 - Supertest for e2e testing
 - Coverage reports generated in `../coverage`
-
-### Python Backend
-- No test configuration currently present in pyproject.toml
 
 ### Astro Sites
 - No test configuration currently present

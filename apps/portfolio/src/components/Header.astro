@@ -10,13 +10,12 @@ import HeaderLink from "./HeaderLink.astro";
         <span class="domain">ryan-stoughton.dev</span>
       </a>
     </div>
-    
+
     <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
       <span></span>
       <span></span>
-      <span></span>
     </button>
-    
+
     <div class="nav-links">
       <HeaderLink href="/">home</HeaderLink>
       <HeaderLink href="/blog">blog</HeaderLink>
@@ -26,24 +25,24 @@ import HeaderLink from "./HeaderLink.astro";
 </header>
 
 <script>
-  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-  const navLinks = document.querySelector('.nav-links');
+  const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
 
-  mobileMenuToggle?.addEventListener('click', () => {
-    navLinks?.classList.toggle('open');
-    mobileMenuToggle?.classList.toggle('open');
+  mobileMenuToggle?.addEventListener("click", () => {
+    navLinks?.classList.toggle("open");
+    mobileMenuToggle?.classList.toggle("open");
   });
 
   // Handle window resize to prevent flickering
   function handleResize() {
     if (window.innerWidth > 768) {
-      navLinks?.classList.remove('open');
-      mobileMenuToggle?.classList.remove('open');
+      navLinks?.classList.remove("open");
+      mobileMenuToggle?.classList.remove("open");
     }
   }
 
-  window.addEventListener('resize', handleResize);
-  
+  window.addEventListener("resize", handleResize);
+
   // Initial check
   handleResize();
 </script>
@@ -80,7 +79,7 @@ import HeaderLink from "./HeaderLink.astro";
   .terminal-prompt {
     color: var(--accent);
     font-weight: 700;
-    font-family: 'Courier New', monospace;
+    font-family: "Courier New", monospace;
   }
 
   .domain {
@@ -102,7 +101,7 @@ import HeaderLink from "./HeaderLink.astro";
   }
 
   .nav-links :global(a::after) {
-    content: '_';
+    content: "_";
     color: var(--terminal-cursor);
     margin-left: 2px;
     opacity: 0;
@@ -123,8 +122,14 @@ import HeaderLink from "./HeaderLink.astro";
   }
 
   @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
   }
 
   .mobile-menu-toggle {
@@ -134,7 +139,7 @@ import HeaderLink from "./HeaderLink.astro";
     border: none;
     cursor: pointer;
     padding: 0.5rem;
-    gap: 4px;
+    gap: 6px;
     width: 40px;
     height: 40px;
     justify-content: center;
@@ -142,8 +147,8 @@ import HeaderLink from "./HeaderLink.astro";
   }
 
   .mobile-menu-toggle span {
-    width: 20px;
-    height: 2px;
+    width: 18px;
+    height: 1px;
     background-color: var(--text-primary);
     transition: all 0.3s ease;
     transform-origin: center;
@@ -151,15 +156,11 @@ import HeaderLink from "./HeaderLink.astro";
   }
 
   .mobile-menu-toggle.open span:nth-child(1) {
-    transform: rotate(45deg) translate(0px, 6px);
+    transform: rotate(45deg) translate(2px, 3px);
   }
 
   .mobile-menu-toggle.open span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .mobile-menu-toggle.open span:nth-child(3) {
-    transform: rotate(-45deg) translate(0px, -6px);
+    transform: rotate(-45deg) translate(2px, -3px);
   }
 
   @media (max-width: 768px) {
@@ -167,11 +168,11 @@ import HeaderLink from "./HeaderLink.astro";
       padding: 1rem;
       height: 70px;
     }
-    
+
     .mobile-menu-toggle {
       display: flex;
     }
-    
+
     .nav-links {
       position: absolute;
       top: 100%;
@@ -186,28 +187,27 @@ import HeaderLink from "./HeaderLink.astro";
       overflow: hidden;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.3s ease;
+      transition:
+        max-height 0.3s ease,
+        opacity 0.3s ease,
+        visibility 0.3s ease;
       z-index: 10;
     }
-    
+
     .nav-links.open {
       max-height: 300px;
       opacity: 1;
       visibility: visible;
     }
-    
+
     .nav-links :global(a) {
       padding: 1rem 2rem;
       font-size: 1rem;
       border-bottom: 1px solid transparent;
     }
-    
+
     .nav-links :global(a:hover) {
       background-color: var(--bg-secondary);
-    }
-    
-    .nav-links :global(a::after) {
-      display: none;
     }
   }
 </style>
