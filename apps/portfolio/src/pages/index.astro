@@ -12,7 +12,72 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
   </head>
   <body>
     <Header />
-    <main></main>
+    <main>
+      <section class="hero">
+        <div class="container">
+          <!-- Hero content will go here -->
+        </div>
+      </section>
+      
+      <section class="content">
+        <div class="container">
+          <!-- Main content will go here -->
+        </div>
+      </section>
+    </main>
     <Footer />
   </body>
 </html>
+
+<style>
+  /* Mobile-first responsive layout */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  main {
+    min-height: calc(100vh - 200px); /* Adjust based on header/footer height */
+  }
+
+  .hero {
+    padding: 2rem 0;
+    text-align: center;
+  }
+
+  .content {
+    padding: 2rem 0;
+  }
+
+  /* Tablet styles */
+  @media (min-width: 768px) {
+    .container {
+      padding: 0 2rem;
+    }
+
+    .hero {
+      padding: 4rem 0;
+    }
+
+    .content {
+      padding: 4rem 0;
+    }
+  }
+
+  /* Desktop styles */
+  @media (min-width: 1024px) {
+    .container {
+      padding: 0 3rem;
+    }
+
+    .hero {
+      padding: 6rem 0;
+    }
+
+    .content {
+      padding: 6rem 0;
+    }
+  }
+</style>

@@ -1,63 +1,212 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
-import { SITE_TITLE } from "../consts";
 ---
 
 <header>
   <nav>
-    <h2><a href="/">$ {SITE_TITLE}</a></h2>
-    <div class="internal-links">
-      <HeaderLink href="/">Home</HeaderLink>
-    </div>
-    <div class="social-links">
-      <a href="https://github.com/withastro/astro" target="_blank">
-        <span class="sr-only">Go to Astro's GitHub repo</span>
-        <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
-          ><path
-            fill="currentColor"
-            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-          ></path></svg
-        >
+    <div class="logo">
+      <a href="/">
+        <span class="terminal-prompt">$</span>
+        <span class="domain">ryan-stoughton.dev</span>
       </a>
+    </div>
+    
+    <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    
+    <div class="nav-links">
+      <HeaderLink href="/">home</HeaderLink>
+      <HeaderLink href="/blog">blog</HeaderLink>
+      <HeaderLink href="/uses">uses</HeaderLink>
     </div>
   </nav>
 </header>
+
+<script>
+  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+
+  mobileMenuToggle?.addEventListener('click', () => {
+    navLinks?.classList.toggle('open');
+    mobileMenuToggle?.classList.toggle('open');
+  });
+
+  // Handle window resize to prevent flickering
+  function handleResize() {
+    if (window.innerWidth > 768) {
+      navLinks?.classList.remove('open');
+      mobileMenuToggle?.classList.remove('open');
+    }
+  }
+
+  window.addEventListener('resize', handleResize);
+  
+  // Initial check
+  handleResize();
+</script>
 <style>
   header {
     margin: 0;
-    padding: 0 1em;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    position: relative;
+    height: 70px;
+    box-sizing: border-box;
   }
 
-  h2 {
-    margin: 0;
-    font-size: 1em;
-  }
-
-  h2 a,
-  h2 a.active {
-    text-decoration: none;
-  }
   nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
   }
-  nav a {
-    padding: 1em 0.5em;
-    color: var(--black);
-    border-bottom: 4px solid transparent;
-    text-decoration: none;
-  }
-  nav a.active {
-    text-decoration: none;
-    border-bottom-color: var(--accent);
-  }
-  .social-links,
-  .social-links a {
+
+  .logo a {
     display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 1.1rem;
   }
-  @media (max-width: 720px) {
-    .social-links {
+
+  .terminal-prompt {
+    color: var(--accent);
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+  }
+
+  .domain {
+    color: var(--text-primary);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .nav-links :global(a) {
+    position: relative;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+  }
+
+  .nav-links :global(a::after) {
+    content: '_';
+    color: var(--terminal-cursor);
+    margin-left: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .nav-links :global(a:hover) {
+    color: var(--text-primary);
+  }
+
+  .nav-links :global(a:hover::after) {
+    opacity: 1;
+    animation: blink 1s infinite;
+  }
+
+  .nav-links :global(a.active) {
+    color: var(--accent);
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    gap: 4px;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mobile-menu-toggle span {
+    width: 20px;
+    height: 2px;
+    background-color: var(--text-primary);
+    transition: all 0.3s ease;
+    transform-origin: center;
+    display: block;
+  }
+
+  .mobile-menu-toggle.open span:nth-child(1) {
+    transform: rotate(45deg) translate(0px, 6px);
+  }
+
+  .mobile-menu-toggle.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-toggle.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(0px, -6px);
+  }
+
+  @media (max-width: 768px) {
+    header {
+      padding: 1rem;
+      height: 70px;
+    }
+    
+    .mobile-menu-toggle {
+      display: flex;
+    }
+    
+    .nav-links {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: var(--bg-primary);
+      border-top: 1px solid var(--border-color);
+      flex-direction: column;
+      gap: 0;
+      padding: 1rem 0;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+    
+    .nav-links.open {
+      max-height: 300px;
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .nav-links :global(a) {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border-bottom: 1px solid transparent;
+    }
+    
+    .nav-links :global(a:hover) {
+      background-color: var(--bg-secondary);
+    }
+    
+    .nav-links :global(a::after) {
       display: none;
     }
   }
