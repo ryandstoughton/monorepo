@@ -3,9 +3,17 @@ from sqlmodel import Field, SQLModel
 import sqlalchemy as sa
 
 
-class ScryfallCardBase(SQLModel):
+class ScryfallCard(SQLModel, table=True):
+    """
+    Represents information about a single Magic: The Gathering card as listed in Scryfall.
+    """
+
+    __tablename__ = "scryfall_card"  # type: ignore - Known SQLModel issue type checking `__tablename__`
+
     scryfall_id: str = Field(
-        sa_column=sa.Column(sa.String(), unique=True, index=True, nullable=False)
+        sa_column=sa.Column(
+            sa.String(), unique=True, index=True, nullable=False, primary_key=True
+        )
     )
     oracle_id: Optional[str] = Field(default=None, sa_column=sa.Column(sa.String()))
     multiverse_ids: Optional[List[int]] = Field(
@@ -83,19 +91,3 @@ class ScryfallCardBase(SQLModel):
     purchase_uris: Optional[Dict[str, str]] = Field(
         default=None, sa_column=sa.Column(sa.JSON)
     )
-
-
-class ScryfallCard(ScryfallCardBase, table=True):
-    """
-    Represents information about a single Magic: The Gathering card as listed in Scryfall.
-    """
-
-    __tablename__ = "scryfall_card"  # type: ignore - Known SQLModel issue type checking `__tablename__`
-
-    id: Optional[int] = Field(
-        default=None,
-        sa_column=sa.Column(sa.Integer(), primary_key=True, nullable=False),
-    )
-
-class ScryfallCardCreate(ScryfallCardBase):
-    pass

@@ -1,10 +1,27 @@
 from typing import Optional
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, ForeignKey, SQLModel
 import sqlalchemy as sa
 
 
 class CardBase(SQLModel):
-    scryfall_id: str = Field(sa_column=sa.Column(sa.String(), nullable=False))
+    set_id: str = Field(sa_column=sa.Column(sa.Text(), nullable=False))
+
+    scryfall_id: str = Field(
+        sa_column=sa.Column(
+            sa.String(),
+            ForeignKey(
+                "scryfall_card.scryfall_id",
+                name="scryfall_id_fkey",
+            ),
+            nullable=False,
+        )
+    )
+
+    pack_id: Optional[int] = Field(
+        sa_column=sa.Column(
+            sa.Integer(), ForeignKey("pack.id", name="pack_id_fkey"), default=None
+        )
+    )
 
 
 class Card(CardBase, table=True):

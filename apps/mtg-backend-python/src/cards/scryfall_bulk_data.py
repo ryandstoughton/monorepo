@@ -7,8 +7,8 @@ import ijson
 from sqlalchemy.dialects.postgresql import insert
 from sqlmodel import Session
 
-from database.database import get_session
-from models.scryfall_card import ScryfallCard, ScryfallCardCreate
+from database.database import session_context
+from models.scryfall_card import ScryfallCard
 
 
 logging.basicConfig(level=logging.INFO)
@@ -28,8 +28,8 @@ async def stream_json_objects(url: str):
 
 
 async def scryfall_bulk_data() -> None:
-    cards: list[ScryfallCardCreate] = []
-    with get_session() as session:
+    cards: list[ScryfallCard] = []
+    with session_context() as session:
         with httpx.Client() as client:
             default_cards = client.get(
                 "https://api.scryfall.com/bulk-data/default-cards"
@@ -41,7 +41,7 @@ async def scryfall_bulk_data() -> None:
                 return
 
         async for obj in stream_json_objects(download_uri):
-            cards.append(ScryfallCardCreate(**obj, scryfall_id=obj["id"]))
+            cards.append(ScryfallCard(**obj, scryfall_id=obj["id"]))
 
             if len(cards) % 20000 == 0 and len(cards) != 0:
                 logger.info("Upserting batch of scryfall cards")
@@ -55,7 +55,7 @@ async def scryfall_bulk_data() -> None:
     logger.info("Completed scryfall_bulk_data")
 
 
-async def upsert_cards(session: Session, cards: list[ScryfallCardCreate]):
+async def upsert_cards(session: Session, cards: list[ScryfallCard]):
     stmt = insert(ScryfallCard).values(
         [{k: v for k, v in card.model_dump().items() if k != "id"} for card in cards]
     )

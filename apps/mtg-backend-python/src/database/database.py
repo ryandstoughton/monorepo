@@ -9,6 +9,14 @@ engine = create_engine(
 
 
 @contextmanager
+def session_context():
+    db = Session(engine)
+    try:
+        yield db
+    finally:
+        db.close()
+
+
 def get_session():
     db = Session(engine)
     try:

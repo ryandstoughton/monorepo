@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
 from cards.router import router as cards_router
+from packs.router import router as packs_router
 from cards.scryfall_bulk_data import scryfall_bulk_data_scheduler
 import logging
 
@@ -22,6 +23,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(cards_router)
+app.include_router(packs_router)
 
 
 def main():
