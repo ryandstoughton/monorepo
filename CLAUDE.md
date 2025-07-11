@@ -102,3 +102,9 @@ Backends expect PostgreSQL connection via environment variables:
 
 ### Astro Sites
 - No test configuration currently present
+
+## Portfolio Inspiration
+- https://brittanychiang.com/
+- https://v4.brittanychiang.com/
+- https://typecraft.dev/
+- https://linear.app/

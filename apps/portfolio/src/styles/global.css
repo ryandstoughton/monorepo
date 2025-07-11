@@ -5,15 +5,16 @@
  */
 
 :root {
-	--accent: #6366f1;
-	--accent-dark: #4f46e5;
-	--accent-light: #818cf8;
-	--bg-primary: #0f0f0f;
-	--bg-secondary: #1a1a1a;
-	--text-primary: #f1f1f1;
-	--text-secondary: #a1a1a1;
-	--border-color: #2a2a2a;
-	--terminal-cursor: #6366f1;
+	--accent: #64ffda;
+		--accent-dark: #4db6ac;
+		--accent-light: #80cbc4;
+		--bg-primary: #0a192f;
+		--bg-secondary: #112240;
+		--text-primary: #ccd6f6;
+		--text-secondary: #8892b0;
+		--text-muted: #495670;
+		--border-color: #233554;
+		--terminal-cursor: #64ffda;
 	--box-shadow:
 		0 2px 6px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.4),
 		0 16px 32px rgba(0, 0, 0, 0.4);
@@ -33,19 +34,19 @@
 	font-display: swap;
 }
 body {
-	font-family: 'Atkinson', sans-serif;
-	background-color: var(--bg-primary);
+	font-family: 'Calibre', 'Inter', sans-serif;
+		background: linear-gradient(135deg, var(--bg-primary) 0%, #0d1b2a 100%);
+		background-attachment: fixed;
 	margin: 0;
 	padding: 0;
-	text-align: left 0% 600px;
+	text-align: left;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: var(--text-primary);
-	font-size: 20px;
-	line-height: 1.7;
+	font-size: 18px;
+		line-height: 1.6;
 }
 main {
-	width: 720px;
 	max-width: calc(100% - 2em);
 	margin: auto;
 	padding: 3em 1em;

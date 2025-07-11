@@ -1,0 +1,44 @@
+Ryan Stoughton                      St. Louis, MO   |   (314) 596-8101   |   ryandstoughton@gmail.com
+
+Languages     JavaScript, TypeScript, Python, Java, SQL, HTML, CSS
+Frameworks   Node.js, NestJS, ExpressJS, Spring Boot, React, Angular, Tailwind, Dagster, FastAPI, Flask
+Tools               Git, GitLab CI/CD, GitHub Actions, Terraform, AWS CDK, AWS (ECS Fargate, EC2, S3), GCP (BigQuery, Cloud Run), 
+                              Docker, DBT, Kafka, PostgreSQL, MongoDB, Heroku, PCF
+
+Experience
+Drive Social Media — Senior Software Engineer                                                                                                      JAN 2025 - JUN 2025, STL
+Led development of high-impact product initiatives using Node.js (NestJS), Postgres, and DBT, architecting features and infrastructure to support new microservices and improve internal data flow.
+Rebuilt third-party authentication and authorization using Facebook system users, eliminating an entire class of production errors and significantly improving reliability across client integrations.
+Mentored and guided a team of engineers in full-stack development–encouraging best practices, engagement in code reviews, and thoughtful implementation through clear task scoping–to consistently deliver robust, production-grade features on time and elevate overall engineering capability.
+Designed and developed data pipelines using DBT and Postgres, automating model transformations, enforcing testing, and accelerating data delivery leading to roughly 50% reduction in cloud compute costs.
+
+Atlas Digital Group — Senior Software Engineer                                                                                                               JAN 2024 - JAN 2025, STL
+Built configurable e‑commerce integrations with Vue, Node.js (ExpressJS), and Postgres, streamlining client buy flows and dashboard reporting for multiple fiber retailers.
+Redesigned data pipelines using Python, Dagster, and Google BigQuery, cutting ETL processing costs by 40% while improving scalability and reliability for warehouse reporting.
+Integrated with the ICOMS billing system using Spring Boot, ensuring billing consistency across customer workflows.
+Improved development standards by collaborating with product and tech leads to refine code quality, introduce CI/CD, and guide product evolution.
+
+Drive Social Media — Senior Software Engineer                                                                                                      MAY 2021 - JAN 2024, STL
+Developed custom analytics dashboards in React, Node.js (NestJS), and Postgres, providing highly configurable marketing funnels, delivering real-time account insights, and improving the marketing strategies of over 2,000 clients.
+Built robust AdTech connectors for Facebook and Google Ads APIs, providing clients with reliable, actionable data pipelines.
+Evolved and optimized cloud infrastructure using AWS CDK and GitLab CI, automating deployments, improving infra reliability, and accelerating release cycles.
+Implemented microservice architecture using Kafka and monorepo technologies to decouple complex functionality and enable independent service scaling, enabling robust data pipelines for cross-system reporting.
+
+KNOWiNK — Software Engineer                                                                                                                                 MAY 2020 - MAY 2021, STL
+Developed multi‑tenant election software using Angular, Node.js (LoopBack), and MongoDB, scaling to manage millions of voter records during peak cycles.
+Engineered fault‑tolerant API transactions in Node.js, ensuring stability and full auditability for critical election processes.
+Executed data migration from MongoDB to PostgreSQL—rewrote models, patched legacy data, and enhanced schema performance—improving scalability, empowering feature implementation, and improving data accuracy.
+Guided app redesign efforts by providing architectural guidance and oversight in framework and backend decisions.
+
+The Boeing Company — Programmer Analyst                                                                                                        MAY 2018 - MAY 2020, STL
+Automated DevOps onboarding with Angular, Spring Boot, and SQL Server, cutting setup time from weeks to minutes for thousands of projects. 
+Built reactive (and non-reactive) APIs using Spring WebFlux and Spring MVC, streamlining operations, ensuring higher fault tolerance, and providing functionality across development teams.
+Implemented task orchestration using Netflix Conductor reducing service complexity and improving code reusability.
+Managed CI/CD pipelines and deployments using GitLab CI and Pivotal Cloud Foundry, ensuring fast, reliable delivery of cloud-native apps.
+
+Projects
+Keep Me Safe — Web Application, Amazon Alexa Skill, Major League Hackathon Winner                                               ARCHHACKS 2017
+Presented Keep Me Safe–assists users struggling with depression and anxiety through voice-activated assistance. Built using Python, Flask, PostgreSQL, Chart.js, and Amazon Alexa. Awarded “Best Data Visualization” and “Best Hack Addressing Mental Health”.
+
+Education
+Missouri University of Science and Technology — B.S. in Computer Science                                            AUG 2014 - DEC 2018, ROLLA

@@ -15,7 +15,13 @@ import { SITE_TITLE } from "../consts";
     <main>
       <section class="hero">
         <div class="container">
-          <!-- Hero content will go here -->
+          <h1>Ryan Stoughton</h1>
+          <p class="subtitle">Full-Stack Software Engineer</p>
+          <p class="description">
+            I build scalable web applications and data systems that solve complex business problems. 
+            With experience across startups and enterprise environments, I focus on creating efficient, 
+            reliable solutions that drive meaningful impact.
+          </p>
         </div>
       </section>
 
@@ -30,7 +36,6 @@ import { SITE_TITLE } from "../consts";
 </html>
 
 <style>
-  /* Mobile-first responsive layout */
   .container {
     width: 100%;
     max-width: 1200px;
@@ -43,8 +48,31 @@ import { SITE_TITLE } from "../consts";
   }
 
   .hero {
-    padding: 2rem 0;
-    text-align: center;
+    padding: 4rem 0;
+    text-align: left;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+
+  .hero .subtitle {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-weight: 400;
+  }
+
+  .hero .description {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 540px;
+    margin: 0;
   }
 
   .content {
@@ -58,7 +86,16 @@ import { SITE_TITLE } from "../consts";
     }
 
     .hero {
-      padding: 4rem 0;
+      padding: 6rem 0;
+    }
+
+
+    .hero .subtitle {
+      font-size: 1.75rem;
+    }
+
+    .hero .description {
+      font-size: 1.3rem;
     }
 
     .content {
@@ -73,7 +110,16 @@ import { SITE_TITLE } from "../consts";
     }
 
     .hero {
-      padding: 6rem 0;
+      padding: 8rem 0;
+    }
+
+
+    .hero .subtitle {
+      font-size: 2rem;
+    }
+
+    .hero .description {
+      font-size: 1.4rem;
     }
 
     .content {
