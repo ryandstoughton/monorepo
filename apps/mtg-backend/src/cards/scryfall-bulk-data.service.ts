@@ -23,10 +23,10 @@ export class UpdateScryfallCardData {
     private readonly orm: MikroORM, // Used implicitly by @CreateRequestContext() / @EnsureRequestContext()
     private readonly scryfall: ScryfallService,
     @InjectRepository(ScryfallCardEntity)
-    private readonly cardRepo: EntityRepository<ScryfallCardEntity>,
+    private readonly scryfallCardRepo: EntityRepository<ScryfallCardEntity>,
   ) {}
 
-  @Cron(CronExpression.EVERY_WEEK, {
+  @Cron(CronExpression.EVERY_MINUTE, {
     timeZone: 'America/Chicago',
     waitForCompletion: true,
   })
@@ -67,7 +67,7 @@ export class UpdateScryfallCardData {
 
         if (batch.length >= BATCH_SIZE) {
           jsonPipeline.pause();
-          await this.cardRepo.upsertMany(batch, {
+          await this.scryfallCardRepo.upsertMany(batch, {
             onConflictFields: ['scryfallId'],
           });
           this.orm.em.clear();
@@ -79,7 +79,7 @@ export class UpdateScryfallCardData {
 
       jsonPipeline.on('end', async () => {
         if (batch.length > 0) {
-          await this.cardRepo.upsertMany(batch, {
+          await this.scryfallCardRepo.upsertMany(batch, {
             onConflictFields: ['scryfallId'],
           });
 
@@ -97,7 +97,7 @@ export class UpdateScryfallCardData {
   private mapScryfallCardToScryfallCardEntity(
     card: Scryfall.Card,
   ): ScryfallCardEntity {
-    return this.cardRepo.create({
+    return this.scryfallCardRepo.create({
       scryfallId: card.id,
       oracleId: card.oracle_id,
       name: card.name,

@@ -11,8 +11,4 @@ export class ScryfallService {
   async bulkDataInfo(): Promise<Scryfall.BulkDataResponse> {
     return (await this.scryfallApi.get('bulk-data')).data;
   }
-
-  // async downloadBulkData(download_uri: string): Promise<Scryfall.Card[]> {
-  // return
-  // }
 }
