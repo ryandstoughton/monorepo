@@ -3,7 +3,8 @@
   "private": true,
   "author": "Ryan Stoughton",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint:versions": "syncpack lint",
+    "fix:versions": "syncpack fix-mismatches"
   },
   "engines": {
     "node": "22",
@@ -12,5 +13,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "syncpack": "^14.0.0"
+  }
 }
