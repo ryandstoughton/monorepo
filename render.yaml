@@ -22,3 +22,17 @@ services:
         fromDatabase:
           name: unboxed-db
           property: connectionString
+      - key: CORS_ORIGIN
+        value: https://unboxed-frontend-w0dr.onrender.com
+  - type: web
+    name: unboxed-frontend
+    runtime: static
+    buildCommand: npm ci && npm run build --workspace=unboxed-frontend
+    staticPublishPath: apps/unboxed-frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://unboxed-backend-w0dr.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
