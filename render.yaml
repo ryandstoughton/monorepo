@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: unboxed-backend
+    runtime: docker
+    dockerfilePath: apps/unboxed-backend/Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: "3000"
+      - key: NODE_ENV
+        value: production
