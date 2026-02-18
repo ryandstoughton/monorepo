@@ -11,6 +11,7 @@ services:
     dockerfilePath: apps/unboxed-backend/Dockerfile
     dockerContext: .
     plan: free
+    preDeployCommand: node apps/unboxed-backend/dist/src/migrate.js
     healthCheckPath: /health
     envVars:
       - key: PORT

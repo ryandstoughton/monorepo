@@ -18,5 +18,6 @@ COPY apps/unboxed-backend/package.json apps/unboxed-backend/
 RUN npm ci --workspace=unboxed-backend --omit=dev
 
 COPY --from=build /app/apps/unboxed-backend/dist apps/unboxed-backend/dist
+COPY apps/unboxed-backend/drizzle apps/unboxed-backend/drizzle
 
 CMD ["node", "apps/unboxed-backend/dist/src/main.js"]
