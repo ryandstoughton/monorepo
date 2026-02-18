@@ -1,6 +1,6 @@
 databases:
   - name: unboxed-db
-    plan: free
+    plan: starter 
     databaseName: unboxed
     user: unboxed
 
@@ -10,7 +10,7 @@ services:
     runtime: docker
     dockerfilePath: apps/unboxed-backend/Dockerfile
     dockerContext: .
-    plan: free
+    plan: starter 
     preDeployCommand: node apps/unboxed-backend/dist/src/migrate.js
     healthCheckPath: /health
     envVars:
