@@ -1,7 +1,10 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
   "astro.updateImportsOnFileMove.enabled": false,
-  "typescript.preferences.importModuleSpecifier": "project-relative",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
-  "python.languageServer": "Pylance"
+  "python.languageServer": "Pylance",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
 }

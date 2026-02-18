@@ -1,5 +1,6 @@
 {
   "name": "monorepo",
+  "private": true,
   "author": "Ryan Stoughton",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,8 +12,5 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ],
-  "devDependencies": {
-    "eslint-plugin-unused-imports": "^4.1.4"
-  }
+  ]
 }
