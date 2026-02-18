@@ -19,4 +19,4 @@ RUN npm ci --workspace=unboxed-backend --omit=dev
 
 COPY --from=build /app/apps/unboxed-backend/dist apps/unboxed-backend/dist
 
-CMD ["node", "apps/unboxed-backend/dist/main.js"]
+CMD ["node", "apps/unboxed-backend/dist/src/main.js"]
