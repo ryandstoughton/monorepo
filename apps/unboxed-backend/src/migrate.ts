@@ -7,7 +7,9 @@ async function runMigrations(): Promise<void> {
   const db = drizzle(pool);
 
   console.log('Running database migrations...');
-  await migrate(db, { migrationsFolder: './drizzle' });
+  const path = await import('path');
+  const migrationsFolder = path.join(__dirname, '..', '..', 'drizzle');
+  await migrate(db, { migrationsFolder });
   console.log('Migrations complete.');
 
   await pool.end();
