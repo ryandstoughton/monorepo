@@ -23,7 +23,7 @@ services:
           name: unboxed-db
           property: connectionString
       - key: CORS_ORIGIN
-        value: https://unboxed-frontend-w0dr.onrender.com
+        value: https://unboxed-frontend.onrender.com
   - type: web
     name: unboxed-frontend
     runtime: static
