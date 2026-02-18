@@ -1,3 +1,6 @@
 dist
 node_modules
 *storybook.log
+.env
+.env.*
+!.env.example

@@ -3,6 +3,8 @@
   "private": true,
   "author": "Ryan Stoughton",
   "scripts": {
+    "lint": "npm run lint --workspaces --if-present",
+    "lint:fix": "npm run lint:fix --workspaces --if-present",
     "lint:versions": "syncpack lint",
     "fix:versions": "syncpack fix-mismatches"
   },
