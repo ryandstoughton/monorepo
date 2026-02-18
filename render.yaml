@@ -1,6 +1,6 @@
 databases:
   - name: unboxed-db
-    plan: starter 
+    plan: basic-256mb 
     databaseName: unboxed
     user: unboxed
 
