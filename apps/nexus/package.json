@@ -1,15 +1,15 @@
 {
   "name": "nexus",
-  "type": "module",
-  "version": "0.0.1",
   "description": "An Astro frontend for rapid prototyping across frameworks",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
+  "version": "0.0.1",
   "dependencies": {
     "astro": "^5.17.1"
-  }
+  },
+  "scripts": {
+    "astro": "astro",
+    "build": "astro build",
+    "dev": "astro dev",
+    "preview": "astro preview"
+  },
+  "type": "module"
 }
