@@ -24,6 +24,18 @@ interface BulkDataResponse {
   data: BulkDataEntry[];
 }
 
+interface ScryfallCard {
+  id: string;
+  oracle_id?: string;
+  name: string;
+  lang: string;
+  set: string;
+  collector_number: string;
+  rarity?: string;
+  layout?: string;
+  [key: string]: unknown;
+}
+
 @Injectable()
 export class ScryfallService {
   private readonly logger = new Logger(ScryfallService.name);
@@ -73,17 +85,18 @@ export class ScryfallService {
       let totalProcessed = 0;
       const syncedAt = new Date();
 
-      for await (const { value: card } of jsonStream) {
+      for await (const { value } of jsonStream) {
+        const card = value as ScryfallCard;
         batch.push({
-          id: card.id as string,
-          oracleId: (card.oracle_id as string | undefined) ?? null,
-          name: card.name as string,
-          lang: card.lang as string,
-          setCode: card.set as string,
-          collectorNumber: card.collector_number as string,
-          rarity: (card.rarity as string | undefined) ?? null,
-          layout: (card.layout as string | undefined) ?? null,
-          data: card as Record<string, unknown>,
+          id: card.id,
+          oracleId: card.oracle_id ?? null,
+          name: card.name,
+          lang: card.lang,
+          setCode: card.set,
+          collectorNumber: card.collector_number,
+          rarity: card.rarity ?? null,
+          layout: card.layout ?? null,
+          data: card,
           syncedAt,
         });
 
