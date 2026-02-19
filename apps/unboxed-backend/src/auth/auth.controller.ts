@@ -6,7 +6,6 @@ import { UsersService } from '../users/users.service';
 interface Auth0JwtPayload {
   sub: string;
   'https://unboxed.com/email'?: string;
-  'https://unboxed.com/name'?: string;
 }
 
 @Controller('auth')
@@ -19,8 +18,7 @@ export class AuthController {
     const payload = req.user as Auth0JwtPayload;
     const auth0Id = payload.sub;
     const email = payload['https://unboxed.com/email'] ?? '';
-    const name = payload['https://unboxed.com/name'];
 
-    return this.usersService.findOrCreateByAuth0Id(auth0Id, email, name);
+    return this.usersService.findOrCreateByAuth0Id(auth0Id, email);
   }
 }

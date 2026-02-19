@@ -16,7 +16,7 @@ export class UsersService {
     return this.db.select().from(users).where(eq(users.id, id));
   }
 
-  async findOrCreateByAuth0Id(auth0Id: string, email: string, name?: string) {
+  async findOrCreateByAuth0Id(auth0Id: string, email: string) {
     const [existing] = await this.db
       .select()
       .from(users)
@@ -28,7 +28,7 @@ export class UsersService {
 
     const [created] = await this.db
       .insert(users)
-      .values({ auth0Id, email, name })
+      .values({ auth0Id, email })
       .returning();
 
     return created;
