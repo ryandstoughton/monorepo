@@ -1,10 +1,18 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
+import { useApiFetch } from "../lib/useApiFetch";
 
 function RootComponent() {
   const { isAuthenticated, loginWithRedirect, logout, isLoading, error } =
     useAuth0();
+  const apiFetch = useApiFetch();
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    void apiFetch("/auth/me");
+  }, [isAuthenticated, apiFetch]);
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-950 font-sans text-gray-100">
