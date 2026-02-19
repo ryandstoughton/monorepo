@@ -5,6 +5,10 @@
   "dependencies": {
     "astro": "^5.17.1"
   },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.6",
+    "typescript": "~5.9.3"
+  },
   "scripts": {
     "astro": "astro",
     "build": "astro build",
@@ -12,9 +16,5 @@
     "lint": "astro check",
     "preview": "astro preview"
   },
-  "type": "module",
-  "devDependencies": {
-    "@astrojs/check": "^0.9.6",
-    "typescript": "^5.9.3"
-  }
+  "type": "module"
 }
