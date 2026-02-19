@@ -24,6 +24,12 @@ services:
           property: connectionString
       - key: CORS_ORIGIN
         value: https://unboxed-frontend.onrender.com
+      - key: AUTH0_DOMAIN
+        sync: false
+      - key: AUTH0_AUDIENCE
+        sync: false
+      - key: ADMIN_API_KEY
+        sync: false
   - type: web
     name: unboxed-frontend
     runtime: static
@@ -32,6 +38,12 @@ services:
     envVars:
       - key: VITE_API_URL
         value: https://unboxed-backend-w0dr.onrender.com
+      - key: VITE_AUTH0_DOMAIN
+        sync: false
+      - key: VITE_AUTH0_CLIENT_ID
+        sync: false
+      - key: VITE_AUTH0_AUDIENCE
+        sync: false
     routes:
       - type: rewrite
         source: /*

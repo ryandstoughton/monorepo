@@ -10,7 +10,18 @@ async function seed(): Promise<void> {
 
   await db
     .insert(users)
-    .values([{ email: 'alice@example.com' }, { email: 'bob@example.com' }])
+    .values([
+      {
+        email: 'alice@example.com',
+        auth0Id: 'auth0|seed-alice',
+        name: 'Alice',
+      },
+      {
+        email: 'bob@example.com',
+        auth0Id: 'auth0|seed-bob',
+        name: 'Bob',
+      },
+    ])
     .onConflictDoNothing();
 
   console.log('Seeding complete.');

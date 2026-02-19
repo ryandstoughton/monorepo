@@ -15,4 +15,22 @@ export class UsersService {
   findOne(id: number) {
     return this.db.select().from(users).where(eq(users.id, id));
   }
+
+  async findOrCreateByAuth0Id(auth0Id: string, email: string, name?: string) {
+    const [existing] = await this.db
+      .select()
+      .from(users)
+      .where(eq(users.auth0Id, auth0Id));
+
+    if (existing) {
+      return existing;
+    }
+
+    const [created] = await this.db
+      .insert(users)
+      .values({ auth0Id, email, name })
+      .returning();
+
+    return created;
+  }
 }

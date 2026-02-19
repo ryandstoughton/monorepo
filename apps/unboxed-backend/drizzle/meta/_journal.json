@@ -8,6 +8,20 @@
       "when": 1771384620806,
       "tag": "0000_regular_beast",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1771391489482,
+      "tag": "0001_broken_thena",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1771467081733,
+      "tag": "0002_productive_smasher",
+      "breakpoints": true
     }
   ]
 }
