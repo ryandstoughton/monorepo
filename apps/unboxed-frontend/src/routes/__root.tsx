@@ -3,53 +3,44 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useAuth0 } from "@auth0/auth0-react";
 
 function RootComponent() {
-  const { isAuthenticated, user, loginWithRedirect, logout, isLoading, error } =
+  const { isAuthenticated, loginWithRedirect, logout, isLoading, error } =
     useAuth0();
 
   return (
-    <>
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "0.75rem 1.5rem",
-          borderBottom: "1px solid #e5e7eb",
-        }}
-      >
-        <strong>Unboxed</strong>
-        <div>
+    <div className="flex min-h-screen flex-col bg-gray-950 font-sans text-gray-100">
+      <nav className="flex h-14 shrink-0 items-center justify-between border-b border-gray-800 px-4 sm:px-6 lg:px-8">
+        <span className="text-base font-semibold tracking-tight">Unboxed</span>
+        <div className="flex items-center gap-3">
           {error ? (
-            <span style={{ color: "red" }}>Auth error: {error.message}</span>
-          ) : isLoading ? null : isAuthenticated ? (
-            <span
-              style={{ display: "flex", alignItems: "center", gap: "1rem" }}
-            >
-              <span>{user?.name ?? user?.email}</span>
-              <button
-                onClick={() => {
-                  void logout({
-                    logoutParams: { returnTo: window.location.origin },
-                  });
-                }}
-              >
-                Log out
-              </button>
+            <span className="text-sm text-red-400">
+              Auth error: {error.message}
             </span>
+          ) : isLoading ? null : isAuthenticated ? (
+            <button
+              className="rounded-md border border-gray-700 px-3 py-1.5 text-sm font-medium text-gray-300 transition-colors hover:bg-gray-800"
+              onClick={() =>
+                void logout({
+                  logoutParams: { returnTo: window.location.origin },
+                })
+              }
+            >
+              Log out
+            </button>
           ) : (
             <button
-              onClick={() => {
-                void loginWithRedirect();
-              }}
+              className="rounded-md bg-white px-3 py-1.5 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-200"
+              onClick={() => void loginWithRedirect()}
             >
               Log in
             </button>
           )}
         </div>
-      </header>
-      <Outlet />
+      </nav>
+      <main className="flex flex-1 flex-col">
+        <Outlet />
+      </main>
       <TanStackRouterDevtools />
-    </>
+    </div>
   );
 }
 

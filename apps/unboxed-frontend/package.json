@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "dependencies": {
     "@auth0/auth0-react": "^2.15.0",
+    "@tailwindcss/vite": "^4.2.0",
     "@tanstack/react-router": "^1.160.2",
     "@tanstack/react-router-devtools": "^1.160.2",
     "@tanstack/router-plugin": "^1.161.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
