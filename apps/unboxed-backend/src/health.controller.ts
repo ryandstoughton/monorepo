@@ -7,7 +7,9 @@ import {
 } from '@nestjs/terminus';
 import { Pool } from 'pg';
 import { PG_POOL_TOKEN } from './database/database.module';
+import { Public } from './auth/public.decorator';
 
+@Public()
 @Controller('health')
 export class HealthController {
   constructor(

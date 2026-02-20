@@ -6,8 +6,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AdminApiKeyGuard } from '../auth/admin-api-key.guard';
+import { Public } from '../auth/public.decorator';
 import { ScryfallService } from './scryfall.service';
 
+@Public()
 @UseGuards(AdminApiKeyGuard)
 @Controller('scryfall')
 export class ScryfallController {

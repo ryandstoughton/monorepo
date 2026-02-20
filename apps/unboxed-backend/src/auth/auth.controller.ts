@@ -1,6 +1,5 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
 import { Request } from 'express';
-import { JwtAuthGuard } from './jwt-auth.guard';
 import { UsersService } from '../users/users.service';
 
 interface Auth0JwtPayload {
@@ -12,7 +11,6 @@ interface Auth0JwtPayload {
 export class AuthController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get('me')
   async me(@Req() req: Request) {
     const payload = req.user as Auth0JwtPayload;
