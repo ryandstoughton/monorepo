@@ -15,13 +15,6 @@
       "when": 1771391489482,
       "tag": "0001_broken_thena",
       "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1771467081733,
-      "tag": "0002_productive_smasher",
-      "breakpoints": true
     }
   ]
 }
