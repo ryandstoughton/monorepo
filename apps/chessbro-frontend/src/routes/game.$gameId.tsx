@@ -1,11 +1,12 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { Chess } from 'chess.js';
-import { useCallback } from 'react';
-import { Chessboard } from 'react-chessboard';
-import { GameProvider, useGame } from '../context/GameContext';
-import { getOrCreateAnonId } from '../lib/anonId';
+import { createFileRoute } from "@tanstack/react-router";
+import { Chess } from "chess.js";
+import { useCallback } from "react";
+import { Chessboard } from "react-chessboard";
+import { GameProvider } from "../context/GameContext";
+import { useGame } from "../context/useGame";
+import { getOrCreateAnonId } from "../lib/anonId";
 
-export const Route = createFileRoute('/game/$gameId')({
+export const Route = createFileRoute("/game/$gameId")({
   component: GamePage,
 });
 
@@ -34,21 +35,21 @@ function GameBoard({ gameId }: { gameId: string }) {
       targetSquare: string | null;
     }) => {
       if (!targetSquare) return false;
-      if (status !== 'active') return false;
-      if (role === 'spectator' || role === null) return false;
-      if (role === 'white' && turn !== 'w') return false;
-      if (role === 'black' && turn !== 'b') return false;
+      if (status !== "active") return false;
+      if (role === "spectator" || role === null) return false;
+      if (role === "white" && turn !== "w") return false;
+      if (role === "black" && turn !== "b") return false;
 
       // Local validation before sending to server
       const chess = new Chess(fen);
       const move = chess.move({
         from: sourceSquare,
         to: targetSquare,
-        promotion: 'q',
+        promotion: "q",
       });
       if (!move) return false;
 
-      sendMove(sourceSquare, targetSquare, 'q');
+      sendMove(sourceSquare, targetSquare, "q");
       return true;
     },
     [role, fen, status, turn, sendMove],
@@ -57,7 +58,7 @@ function GameBoard({ gameId }: { gameId: string }) {
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-4 p-4 sm:p-6 lg:p-8">
       {/* Status banner */}
-      {status === 'waiting' && (
+      {status === "waiting" && (
         <div className="flex flex-col items-center gap-3 text-center">
           <p className="text-lg text-gray-300">Waiting for opponent...</p>
           <div className="flex items-center gap-2">
@@ -76,15 +77,15 @@ function GameBoard({ gameId }: { gameId: string }) {
         </div>
       )}
 
-      {status === 'finished' && (
+      {status === "finished" && (
         <div className="rounded-lg border border-gray-700 bg-gray-900 px-6 py-4 text-center">
-          {winner === 'draw' ? (
+          {winner === "draw" ? (
             <p className="text-lg font-semibold text-gray-300">
               Game over — Draw!
             </p>
           ) : (
             <p className="text-lg font-semibold text-gray-300">
-              Game over —{' '}
+              Game over —{" "}
               <span className="text-white capitalize">{winner}</span> wins!
             </p>
           )}
@@ -92,18 +93,16 @@ function GameBoard({ gameId }: { gameId: string }) {
       )}
 
       {/* Connection indicator */}
-      {!connected && (
-        <p className="text-sm text-yellow-400">Connecting...</p>
-      )}
+      {!connected && <p className="text-sm text-yellow-400">Connecting...</p>}
 
       {/* Role indicator */}
       {role && (
         <p className="text-sm text-gray-400">
-          You are playing as{' '}
+          You are playing as{" "}
           <span className="font-medium text-gray-200 capitalize">{role}</span>
-          {status === 'active' && (
+          {status === "active" && (
             <span className="ml-2 text-gray-500">
-              ({turn === 'w' ? 'White' : 'Black'}&apos;s turn)
+              ({turn === "w" ? "White" : "Black"}&apos;s turn)
             </span>
           )}
         </p>
@@ -115,7 +114,7 @@ function GameBoard({ gameId }: { gameId: string }) {
           options={{
             position: fen,
             onPieceDrop,
-            boardOrientation: role === 'black' ? 'black' : 'white',
+            boardOrientation: role === "black" ? "black" : "white",
           }}
         />
       </div>

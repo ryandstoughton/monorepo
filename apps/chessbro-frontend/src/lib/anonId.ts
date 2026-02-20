@@ -1,10 +1,10 @@
 export function getOrCreateAnonId(): string {
   const match = document.cookie
-    .split('; ')
-    .find((row) => row.startsWith('anon_id='));
+    .split("; ")
+    .find((row) => row.startsWith("anon_id="));
 
   if (match) {
-    return match.split('=')[1];
+    return match.split("=")[1];
   }
 
   const id = crypto.randomUUID();

@@ -23,9 +23,7 @@ export const games = pgTable('games', {
   status: varchar('status', { length: 20 }).notNull().default('waiting'),
   fen: text('fen')
     .notNull()
-    .default(
-      'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-    ),
+    .default('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'),
   winner: varchar('winner', { length: 10 }),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),

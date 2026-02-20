@@ -1,11 +1,11 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { Chess } from 'chess.js';
-import { useCallback, useState } from 'react';
-import { Chessboard } from 'react-chessboard';
-import { apiFetch } from '../lib/api';
-import { getOrCreateAnonId } from '../lib/anonId';
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Chess } from "chess.js";
+import { useCallback, useState } from "react";
+import { Chessboard } from "react-chessboard";
+import { apiFetch } from "../lib/api";
+import { getOrCreateAnonId } from "../lib/anonId";
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   component: Home,
 });
 
@@ -17,12 +17,12 @@ function Home() {
   const createGame = useCallback(async () => {
     setCreating(true);
     try {
-      const { id } = await apiFetch<{ id: string }>('/games', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const { id } = await apiFetch<{ id: string }>("/games", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ playerToken: getOrCreateAnonId() }),
       });
-      void navigate({ to: '/game/$gameId', params: { gameId: id } });
+      void navigate({ to: "/game/$gameId", params: { gameId: id } });
     } finally {
       setCreating(false);
     }
@@ -41,7 +41,7 @@ function Home() {
       const move = next.move({
         from: sourceSquare,
         to: targetSquare,
-        promotion: 'q',
+        promotion: "q",
       });
       if (move === null) return false;
       setGame(next);
@@ -57,7 +57,7 @@ function Home() {
         disabled={creating}
         className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-200 disabled:opacity-50"
       >
-        {creating ? 'Creating...' : 'Create Multiplayer Game'}
+        {creating ? "Creating..." : "Create Multiplayer Game"}
       </button>
       <div className="w-full max-w-lg">
         <Chessboard

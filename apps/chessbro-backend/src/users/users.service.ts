@@ -4,7 +4,6 @@ import { DRIZZLE_TOKEN } from '../database/database';
 import type { DrizzleDB } from '../database/database';
 import { users } from '../database/schema';
 
-
 @Injectable()
 export class UsersService {
   constructor(@Inject(DRIZZLE_TOKEN) private readonly db: DrizzleDB) {}

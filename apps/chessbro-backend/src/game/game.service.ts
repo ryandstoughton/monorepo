@@ -19,10 +19,7 @@ export class GameService {
   }
 
   async getGame(id: string): Promise<Game | null> {
-    const [game] = await this.db
-      .select()
-      .from(games)
-      .where(eq(games.id, id));
+    const [game] = await this.db.select().from(games).where(eq(games.id, id));
     return game ?? null;
   }
 
