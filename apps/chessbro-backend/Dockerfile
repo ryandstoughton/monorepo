@@ -2,20 +2,24 @@ FROM node:22-alpine AS build
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+RUN corepack enable pnpm
+
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
 COPY apps/chessbro-backend/package.json apps/chessbro-backend/
-RUN npm ci --workspace=chessbro-backend
+RUN pnpm install --frozen-lockfile --filter chessbro-backend
 
 COPY apps/chessbro-backend/ apps/chessbro-backend/
-RUN npm run build --workspace=chessbro-backend
+RUN pnpm --filter chessbro-backend run build
 
 FROM node:22-alpine
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+RUN corepack enable pnpm
+
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
 COPY apps/chessbro-backend/package.json apps/chessbro-backend/
-RUN npm ci --workspace=chessbro-backend --omit=dev
+RUN pnpm install --frozen-lockfile --filter chessbro-backend --prod
 
 COPY --from=build /app/apps/chessbro-backend/dist apps/chessbro-backend/dist
 COPY apps/chessbro-backend/drizzle apps/chessbro-backend/drizzle
