@@ -17,7 +17,7 @@ function RootComponent() {
   return (
     <div className="flex min-h-screen flex-col bg-gray-950 font-sans text-gray-100">
       <nav className="flex h-14 shrink-0 items-center justify-between border-b border-gray-800 px-4 sm:px-6 lg:px-8">
-        <span className="text-base font-semibold tracking-tight">Unboxed</span>
+        <span className="text-base font-semibold tracking-tight">Chessbro</span>
         <div className="flex items-center gap-3">
           {error ? (
             <span className="text-sm text-red-400">

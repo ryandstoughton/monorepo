@@ -3,9 +3,9 @@ services:
     image: postgres:17-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_USER: unboxed
-      POSTGRES_PASSWORD: unboxed
-      POSTGRES_DB: unboxed
+      POSTGRES_USER: chessbro
+      POSTGRES_PASSWORD: chessbro
+      POSTGRES_DB: chessbro
     ports:
       - "5432:5432"
     volumes:

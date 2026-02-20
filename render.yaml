@@ -1,17 +1,17 @@
 databases:
-  - name: unboxed-db
-    plan: basic-256mb 
-    databaseName: unboxed
-    user: unboxed
+  - name: chessbro-db
+    plan: basic-256mb
+    databaseName: chessbro
+    user: chessbro
 
 services:
   - type: web
-    name: unboxed-backend
+    name: chessbro-backend
     runtime: docker
-    dockerfilePath: apps/unboxed-backend/Dockerfile
+    dockerfilePath: apps/chessbro-backend/Dockerfile
     dockerContext: .
-    plan: starter 
-    preDeployCommand: node apps/unboxed-backend/dist/src/migrate.js
+    plan: starter
+    preDeployCommand: node apps/chessbro-backend/dist/src/migrate.js
     healthCheckPath: /health
     envVars:
       - key: PORT
@@ -20,10 +20,10 @@ services:
         value: production
       - key: DATABASE_URL
         fromDatabase:
-          name: unboxed-db
+          name: chessbro-db
           property: connectionString
       - key: CORS_ORIGIN
-        value: https://unboxed-frontend.onrender.com
+        value: https://chessbro-frontend.onrender.com
       - key: AUTH0_DOMAIN
         sync: false
       - key: AUTH0_AUDIENCE
@@ -31,13 +31,13 @@ services:
       - key: ADMIN_API_KEY
         sync: false
   - type: web
-    name: unboxed-frontend
+    name: chessbro-frontend
     runtime: static
-    buildCommand: npm ci && npm run build --workspace=unboxed-frontend
-    staticPublishPath: apps/unboxed-frontend/dist
+    buildCommand: npm ci && npm run build --workspace=chessbro-frontend
+    staticPublishPath: apps/chessbro-frontend/dist
     envVars:
       - key: VITE_API_URL
-        value: https://unboxed-backend-w0dr.onrender.com
+        sync: false
       - key: VITE_AUTH0_DOMAIN
         sync: false
       - key: VITE_AUTH0_CLIENT_ID
