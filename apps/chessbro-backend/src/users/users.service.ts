@@ -4,6 +4,7 @@ import { DRIZZLE_TOKEN } from '../database/database';
 import type { DrizzleDB } from '../database/database';
 import { users } from '../database/schema';
 
+
 @Injectable()
 export class UsersService {
   constructor(@Inject(DRIZZLE_TOKEN) private readonly db: DrizzleDB) {}
@@ -32,5 +33,19 @@ export class UsersService {
       .returning();
 
     return created;
+  }
+
+  async linkAnonId(auth0Id: string, anonId: string) {
+    const [existing] = await this.db
+      .select()
+      .from(users)
+      .where(eq(users.auth0Id, auth0Id));
+
+    if (existing && !existing.anonId) {
+      await this.db
+        .update(users)
+        .set({ anonId })
+        .where(eq(users.auth0Id, auth0Id));
+    }
   }
 }

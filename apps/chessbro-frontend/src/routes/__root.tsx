@@ -3,6 +3,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import { useApiFetch } from "../lib/useApiFetch";
+import { getOrCreateAnonId } from "../lib/anonId";
 
 function RootComponent() {
   const { isAuthenticated, loginWithRedirect, logout, isLoading, error } =
@@ -11,7 +12,13 @@ function RootComponent() {
 
   useEffect(() => {
     if (!isAuthenticated) return;
-    void apiFetch("/auth/me");
+    void apiFetch("/auth/me").then(() => {
+      void apiFetch("/auth/me", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ anonId: getOrCreateAnonId() }),
+      });
+    });
   }, [isAuthenticated, apiFetch]);
 
   return (
