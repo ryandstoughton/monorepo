@@ -33,7 +33,7 @@ services:
   - type: web
     name: chessbro-frontend
     runtime: static
-    buildCommand: npm ci && npm run build --workspace=chessbro-frontend
+    buildCommand: npm install -g pnpm && pnpm install --frozen-lockfile && pnpm --filter chessbro-frontend run build
     staticPublishPath: apps/chessbro-frontend/dist
     envVars:
       - key: VITE_API_URL

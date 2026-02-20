@@ -6,17 +6,23 @@
   },
   "engines": {
     "node": "22",
-    "npm": "10"
+    "pnpm": "10"
+  },
+  "packageManager": "pnpm@10.26.2",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@swc/core",
+      "browser-tabs-lock",
+      "esbuild"
+    ]
   },
   "private": true,
   "scripts": {
+    "build": "pnpm -r --if-present run build",
     "fix:versions": "syncpack fix && syncpack format",
-    "lint": "npm run lint --workspaces --if-present",
-    "lint:fix": "npm run lint:fix --workspaces --if-present",
+    "lint": "pnpm -r --if-present run lint",
+    "lint:fix": "pnpm -r --if-present run lint:fix",
     "lint:versions": "syncpack lint"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  }
 }
