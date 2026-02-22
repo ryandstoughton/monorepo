@@ -5,8 +5,14 @@ export async function apiFetch<T>(
   init?: RequestInit,
 ): Promise<T> {
   const res = await fetch(`${API_URL}${path}`, init);
+  const text = await res.text();
   if (!res.ok) {
-    throw new Error(`API error: ${res.status} ${res.statusText}`);
+    throw new Error(text || `API error: ${res.status} ${res.statusText}`);
   }
-  return res.json() as Promise<T>;
+  if (!text) {
+    throw new Error(
+      `Empty response from ${init?.method ?? "GET"} ${path} (status ${res.status})`,
+    );
+  }
+  return JSON.parse(text) as T;
 }

@@ -16,10 +16,12 @@ export function useApiFetch() {
           Authorization: `Bearer ${token}`,
         },
       });
+      const text = await res.text();
       if (!res.ok) {
-        throw new Error(`API error: ${res.status} ${res.statusText}`);
+        throw new Error(text || `API error: ${res.status} ${res.statusText}`);
       }
-      return res.json() as Promise<T>;
+      if (!text) return undefined as T;
+      return JSON.parse(text) as T;
     },
     [getAccessTokenSilently],
   );
