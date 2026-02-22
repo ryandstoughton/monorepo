@@ -27,6 +27,9 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect {
     { gameId: string; playerToken: string }
   >();
 
+  // gameId -> Set of playerTokens that have requested a rematch
+  private rematchRequests = new Map<string, Set<string>>();
+
   constructor(private readonly gameService: GameService) {}
 
   async handleConnection(client: Socket) {
@@ -94,6 +97,8 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect {
         room.delete(client.id);
         if (room.size === 0) this.rooms.delete(meta.gameId);
       }
+      // Cancel any pending rematch request for this player
+      this.rematchRequests.get(meta.gameId)?.delete(meta.playerToken);
       this.socketMeta.delete(client.id);
     }
   }
@@ -168,6 +173,63 @@ export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect {
       status: updated.status,
       winner: updated.winner ?? undefined,
     });
+  }
+
+  @SubscribeMessage('rematch')
+  async onRematch(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() payload: { gameId: string },
+  ) {
+    const { gameId } = payload;
+    const meta = this.socketMeta.get(client.id);
+    if (!meta || meta.gameId !== gameId) return;
+
+    const game = await this.gameService.getGame(gameId);
+    if (!game || game.status !== 'finished') return;
+
+    const isPlayer =
+      game.whitePlayerToken === meta.playerToken ||
+      game.blackPlayerToken === meta.playerToken;
+    if (!isPlayer) return;
+
+    if (!this.rematchRequests.has(gameId)) {
+      this.rematchRequests.set(gameId, new Set());
+    }
+    this.rematchRequests.get(gameId)!.add(meta.playerToken);
+
+    // Notify the other player that this player wants a rematch
+    client.to(gameId).emit('rematch-requested');
+
+    // If both players have requested, start the rematch
+    const requests = this.rematchRequests.get(gameId)!;
+    const bothReady =
+      game.blackPlayerToken !== null &&
+      requests.has(game.whitePlayerToken) &&
+      requests.has(game.blackPlayerToken);
+
+    if (bothReady) {
+      this.rematchRequests.delete(gameId);
+      const updated = await this.gameService.resetGame(gameId);
+      const chess = new Chess(updated.fen);
+
+      // Emit individually so each client gets their new role
+      for (const socketId of this.rooms.get(gameId) ?? []) {
+        const sm = this.socketMeta.get(socketId);
+        if (!sm) continue;
+        const role =
+          updated.whitePlayerToken === sm.playerToken
+            ? 'white'
+            : updated.blackPlayerToken === sm.playerToken
+              ? 'black'
+              : 'spectator';
+        this.server.to(socketId).emit('rematch-started', {
+          role,
+          fen: updated.fen,
+          turn: chess.turn(),
+          status: updated.status,
+        });
+      }
+    }
   }
 
   private track(socketId: string, gameId: string, playerToken: string) {

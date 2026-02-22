@@ -1,9 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Chess } from "chess.js";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Chessboard } from "react-chessboard";
 import { GameProvider } from "../context/GameContext";
 import { useGame } from "../context/useGame";
+import { apiFetch } from "../lib/api";
 import { getOrCreateAnonId } from "../lib/anonId";
 
 export const Route = createFileRoute("/game/$gameId")({
@@ -22,9 +23,36 @@ function GamePage() {
 }
 
 function GameBoard({ gameId }: { gameId: string }) {
-  const { role, fen, status, turn, winner, connected, sendMove } = useGame();
+  const {
+    role,
+    fen,
+    status,
+    turn,
+    winner,
+    connected,
+    sendMove,
+    myRematchRequested,
+    opponentRematchRequested,
+    requestRematch,
+  } = useGame();
+  const navigate = useNavigate();
+  const [creating, setCreating] = useState(false);
 
   const gameUrl = `${window.location.origin}/game/${gameId}`;
+
+  const createNewGame = useCallback(async () => {
+    setCreating(true);
+    try {
+      const { id } = await apiFetch<{ id: string }>("/games", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ playerToken: getOrCreateAnonId() }),
+      });
+      void navigate({ to: "/game/$gameId", params: { gameId: id } });
+    } finally {
+      setCreating(false);
+    }
+  }, [navigate]);
 
   const onPieceDrop = useCallback(
     ({
@@ -78,17 +106,70 @@ function GameBoard({ gameId }: { gameId: string }) {
       )}
 
       {status === "finished" && (
-        <div className="rounded-lg border border-gray-700 bg-gray-900 px-6 py-4 text-center">
+        <div className="flex flex-col items-center gap-4 rounded-lg border border-gray-700 bg-gray-900 px-8 py-6 text-center">
           {winner === "draw" ? (
-            <p className="text-lg font-semibold text-gray-300">
-              Game over — Draw!
+            <>
+              <p className="text-2xl font-bold text-gray-100">Draw!</p>
+              <p className="text-sm text-gray-400">The game ended in a draw.</p>
+            </>
+          ) : winner === role ? (
+            <>
+              <p className="text-2xl font-bold text-white">You won!</p>
+              <p className="text-sm text-gray-400">
+                Congratulations, you beat your opponent.
+              </p>
+            </>
+          ) : role === "spectator" ? (
+            <p className="text-2xl font-bold text-gray-100">
+              <span className="capitalize">{winner}</span> wins!
             </p>
           ) : (
-            <p className="text-lg font-semibold text-gray-300">
-              Game over —{" "}
-              <span className="text-white capitalize">{winner}</span> wins!
-            </p>
+            <>
+              <p className="text-2xl font-bold text-gray-400">You lost.</p>
+              <p className="text-sm text-gray-500">Better luck next time.</p>
+            </>
           )}
+
+          {/* Rematch status */}
+          {role !== "spectator" &&
+            opponentRematchRequested &&
+            !myRematchRequested && (
+              <p className="text-sm font-medium text-green-400">
+                Your opponent wants a rematch!
+              </p>
+            )}
+          {role !== "spectator" &&
+            myRematchRequested &&
+            !opponentRematchRequested && (
+              <p className="text-sm text-gray-400">
+                Waiting for opponent to accept...
+              </p>
+            )}
+
+          <div className="mt-1 flex gap-3">
+            {role !== "spectator" && (
+              <button
+                onClick={requestRematch}
+                disabled={myRematchRequested}
+                className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-200 disabled:opacity-50"
+              >
+                Rematch
+              </button>
+            )}
+            <button
+              onClick={() => void createNewGame()}
+              disabled={creating}
+              className="rounded-md border border-gray-700 px-4 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-gray-800 disabled:opacity-50"
+            >
+              {creating ? "Creating..." : "New Game"}
+            </button>
+            <button
+              onClick={() => void navigate({ to: "/" })}
+              className="rounded-md border border-gray-700 px-4 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-gray-800"
+            >
+              Go Home
+            </button>
+          </div>
         </div>
       )}
 

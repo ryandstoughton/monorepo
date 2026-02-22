@@ -47,4 +47,25 @@ export class GameService {
     if (!game) throw new NotFoundException('Game not found');
     return game;
   }
+
+  async resetGame(id: string): Promise<Game> {
+    const current = await this.getGame(id);
+    if (!current) throw new NotFoundException('Game not found');
+
+    const [game] = await this.db
+      .update(games)
+      .set({
+        fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+        status: 'active',
+        winner: null,
+        // Swap colors for the rematch
+        whitePlayerToken: current.blackPlayerToken!,
+        blackPlayerToken: current.whitePlayerToken,
+        updatedAt: new Date(),
+      })
+      .where(eq(games.id, id))
+      .returning();
+    if (!game) throw new NotFoundException('Game not found');
+    return game;
+  }
 }

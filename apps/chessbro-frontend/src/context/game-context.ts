@@ -7,10 +7,13 @@ export interface GameState {
   turn: "w" | "b";
   winner: string | null;
   connected: boolean;
+  myRematchRequested: boolean;
+  opponentRematchRequested: boolean;
 }
 
 export interface GameContextValue extends GameState {
   sendMove: (from: string, to: string, promotion?: string) => void;
+  requestRematch: () => void;
 }
 
 export const GameContext = createContext<GameContextValue | null>(null);

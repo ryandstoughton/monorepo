@@ -28,6 +28,8 @@ export function GameProvider({
     turn: "w",
     winner: null,
     connected: false,
+    myRematchRequested: false,
+    opponentRematchRequested: false,
   });
 
   useEffect(() => {
@@ -64,6 +66,31 @@ export function GameProvider({
       setState((s) => ({ ...s, status: "active" }));
     });
 
+    socket.on("rematch-requested", () => {
+      setState((s) => ({ ...s, opponentRematchRequested: true }));
+    });
+
+    socket.on(
+      "rematch-started",
+      (data: {
+        role: "white" | "black" | "spectator";
+        fen: string;
+        turn: "w" | "b";
+        status: string;
+      }) => {
+        setState((s) => ({
+          ...s,
+          role: data.role,
+          fen: data.fen,
+          turn: data.turn,
+          status: data.status,
+          winner: null,
+          myRematchRequested: false,
+          opponentRematchRequested: false,
+        }));
+      },
+    );
+
     socket.on(
       "move-made",
       (data: {
@@ -99,8 +126,13 @@ export function GameProvider({
     [gameId],
   );
 
+  const requestRematch = useCallback(() => {
+    setState((s) => ({ ...s, myRematchRequested: true }));
+    socketRef.current?.emit("rematch", { gameId });
+  }, [gameId]);
+
   return (
-    <GameContext.Provider value={{ ...state, sendMove }}>
+    <GameContext.Provider value={{ ...state, sendMove, requestRematch }}>
       {children}
     </GameContext.Provider>
   );
