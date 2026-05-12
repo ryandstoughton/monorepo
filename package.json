@@ -13,6 +13,8 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@ai-hero/sandcastle": "^0.5.10"
+    "@ai-hero/sandcastle": "^0.5.10",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.6"
   }
 }
